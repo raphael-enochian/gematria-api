@@ -10,12 +10,27 @@ class BaseCodexTestCase(GeneralTestCase):
 
     def setUp(self):
         super().setUp()
-        self.base_codex = codices.BaseCodex()
+        self.codex = codices.BaseCodex()
 
-    @attr('single')
+    # @attr('single')
     def test_decode(self):
         '''
-        Testing gematria_api.codices.EnglishCodex
+        Testing gematria_api.codices.BaseCodex.decode
         '''
-        gematria = self.base_codex.decode(fixtures.typical_english_codex_phrase())
+        gematria = self.codex.decode(fixtures.typical_english_codex_phrase())
         self.assertEqual(gematria, 187, "Calculation performed correctly")
+
+
+class EnglishCodexTestCase(GeneralTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.codex = codices.EnglishCodex()
+
+    # @attr('single')
+    def test_decode(self):
+        '''
+        Testing gematria_api.codices.EnglishCodex.decode
+        '''
+        gematria = self.codex.decode(fixtures.typical_english_codex_phrase())
+        self.assertEqual(gematria, 1122, "Calculation performed correctly")
