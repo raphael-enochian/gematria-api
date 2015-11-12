@@ -1,12 +1,26 @@
 # -*- coding: utf-8 -*-
 # Gematria-API (c) Raphael Enochian
+from functools import reduce
+from string import ascii_lowercase
 
 
 class BaseCodex(object):
     """
     Represents a base codex object.
     """
-    pass
+    def __init__(self):
+        self.table = {k: v for k, v in zip(ascii_lowercase, range(1, 27))}
+
+    def decode(self, phrase):
+        '''
+        Decodes phrase into given codex using table
+
+        :param phrase:
+        :type phrase: str
+        '''
+        phrase = phrase.lower()
+        gematria_map = (lambda table=self.table, phrase=phrase: [table.get(i) for i in phrase if table.get(i) is not None])()
+        return reduce(lambda x, y: x+y, gematria_map)
 
 
 class EnglishCodex(BaseCodex):
@@ -14,7 +28,7 @@ class EnglishCodex(BaseCodex):
     Represents Base6 English Gematria Codex
     """
     def __init__(self):
-        self.table = {'a': 6, 'b': 12, 'c': 18, 'd': 24, 'e': 30, 'f': 36, 'g': 42, 'h': 48, 'i': 54, 'j': 60, 'k': 66, 'l': 72, 'm': 78, 'n': 84, 'o': 90, 'p': 96, 'q': 102, 'r': 108, 's': 114, 't': 120, 'u': 126, 'v': 132, 'w': 138, 'x': 144, 'y': 150, 'z': 156}
+        self.table = {k: v for k, v in zip(ascii_lowercase, range(6, 157, 6))}
 
     def decode(self, phrase):
         '''
@@ -23,4 +37,8 @@ class EnglishCodex(BaseCodex):
         :param phrase:
         :type phrase: str
         '''
-        pass
+        phrase = phrase.lower()
+        gematria = 0
+        for i in phrase:
+            gematria += self.table.get(i) if self.table.get(i) is not None else 0
+        return gematria
