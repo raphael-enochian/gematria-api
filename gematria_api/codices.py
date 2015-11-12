@@ -15,7 +15,7 @@ class BaseCodex(object):
         '''
         Decodes phrase into given codex using table
 
-        :param phrase:
+        :param phrase: A phrase to translate into Gematra
         :type phrase: str
         '''
         phrase = phrase.lower()
